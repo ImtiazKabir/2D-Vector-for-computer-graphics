@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "vector.h"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 
 int main() {
 
   Vector *a = Vector_CreateXY(3, 2);
-  Vector *b = Vector_CreateXY(-1, 1);
-  Vector_Sub(a, Vector_Add(a, a, b), b);
+
+  Vector_Rotate(a, a, 3.1415/2);
   printf("%f %f\n", a->x, a->y);
 
   Vector_Destroy(a);
-  Vector_Destroy(b);
 
   return 0;
 }

@@ -1,6 +1,8 @@
 #include "vector.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 Vector *Vector_Create() {
@@ -158,8 +160,10 @@ Vector *Vector_Copy(Vector *result, Vector *vec) {
 }
 
 Vector *Vector_Ortho(Vector *result, Vector *vec) {
-  result->x = vec->y;
-  result->y = -vec->x;
+  float x = vec->y;
+  float y = -vec->x;
+  result->x = x;
+  result->y = y;
   return result;
 }
 
@@ -176,10 +180,12 @@ Vector *Vector_Truncate(Vector *result, Vector *vec, float limit) {
 }
 
 Vector *Vector_Rotate(Vector *result, Vector *vec, float angle) {
-  float h = atan2(vec->y, vec->x);
-  float m = hypot(vec->x, vec->y);
-  result->x = m * cos(h + angle);
-  result->y = m * sin(h + angle);
+  float cs = cos(angle);
+  float sn = sin(angle);
+  float x = vec->x*cs - vec->y*sn;
+  float y = vec->x*sn + vec->y*cs;
+  result->x = x;
+  result->y = y;
   return result;
 }
 
