@@ -9,7 +9,7 @@ int main() {
 
   Vector *a = Vector_CreateXY(3, 2);
 
-  Vector_Rotate(a, a, 3.1415/2);
+  Vector_Rotate(a, a, M_PI/2);
   printf("%f %f\n", a->x, a->y);
 
   Vector_Destroy(a);
