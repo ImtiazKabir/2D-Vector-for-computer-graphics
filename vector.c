@@ -25,8 +25,8 @@ Vector *Vector_CreateRT(float r, float theta) {
   Vector *vec = (Vector *) malloc(sizeof(Vector));
   if (!vec)
     fprintf(stderr, "Failed to allocate memory");
-  vec->x = r * cos(theta);
-  vec->y = r * sin(theta);
+  vec->x = r * (float) cos(theta);
+  vec->y = r * (float) sin(theta);
   return vec;
 }
 
@@ -43,9 +43,9 @@ Vector *Vector_UNIT() {
   Vector *vec = (Vector *) malloc(sizeof(Vector));
   if (!vec)
     fprintf(stderr, "Failed to allocate memory");
-  float theta = (2 * M_PI * rand()) / RAND_MAX;
-  vec->x = cos(theta);
-  vec->y = sin(theta);
+  float theta = (2 * (float) M_PI * (float) rand()) / RAND_MAX;
+  vec->x = (float) cos(theta);
+  vec->y = (float) sin(theta);
   return vec;
 }
 
@@ -98,7 +98,7 @@ Vector *Vector_Negate(Vector *result, Vector *vec) {
 }
 
 float Vector_Mag(Vector *vec) {
-  return hypot(vec->x, vec->y);
+  return (float) hypot(vec->x, vec->y);
 }
 
 float Vector_SqMag(Vector *vec) {
@@ -106,21 +106,21 @@ float Vector_SqMag(Vector *vec) {
 }
 
 Vector *Vector_Normal(Vector *result, Vector *vec) {
-  float mag = hypot(vec->x, vec->y);
+  float mag = (float) hypot(vec->x, vec->y);
   result->x = vec->x / mag;
   result->y = vec->y / mag;
   return result;
 }
 
 Vector *Vector_SetMag(Vector *result, Vector *vec, float mag) {
-  float pMag = hypot(vec->x, vec->y);
+  float pMag = (float) hypot(vec->x, vec->y);
   result->x = vec->x * mag / pMag;
   result->y = vec->y * mag / pMag;
   return result;
 }
 
 float Vector_Dir(Vector *vec) {
-  return atan2(vec->y, vec->x);
+  return (float) atan2(vec->y, vec->x);
 }
 
 float Vector_Dot(Vector *a, Vector *b) {
@@ -132,7 +132,7 @@ float Vector_Cross(Vector *a, Vector *b) {
 }
 
 float Vector_Dist(Vector *a, Vector *b) {
-  return hypot(a->x - b->x, a->y - b->y);
+  return (float) hypot(a->x - b->x, a->y - b->y);
 }
 
 float Vector_SqDist(Vector *a, Vector *b) {
@@ -144,13 +144,13 @@ float Vector_SqDist(Vector *a, Vector *b) {
 float Vector_AngleTo(Vector *from, Vector *to) {
   float crossProduct = from->x * to->y - from->y * to->x;
   float dotProduct = from->x * to->x + from->y * to->y;
-  return atan2(crossProduct, dotProduct);
+  return (float) atan2(crossProduct, dotProduct);
 }
 
 float Vector_AngleToF(float fromX, float fromY, float toX, float toY) {
   float crossProduct = fromX * toY - fromY * toX;
   float dotProduct = fromX * toX + fromY * toY;
-  return atan2(crossProduct, dotProduct);
+  return (float) atan2(crossProduct, dotProduct);
 }
 
 Vector *Vector_Copy(Vector *result, Vector *vec) {
@@ -172,7 +172,7 @@ Vector *Vector_Truncate(Vector *result, Vector *vec, float limit) {
   result->x = vec->x;
   result->y = vec->y;
   if (result->x*result->x + result->y*result->y > limit * limit) {
-    float factor = limit/hypot(vec->x, vec->y);
+    float factor = limit/(float) hypot(vec->x, vec->y);
     result->x *= factor;
     result->y *= factor;
   }
@@ -180,8 +180,8 @@ Vector *Vector_Truncate(Vector *result, Vector *vec, float limit) {
 }
 
 Vector *Vector_Rotate(Vector *result, Vector *vec, float angle) {
-  float cs = cos(angle);
-  float sn = sin(angle);
+  float cs = (float) cos(angle);
+  float sn = (float) sin(angle);
   float x = vec->x*cs - vec->y*sn;
   float y = vec->x*sn + vec->y*cs;
   result->x = x;
@@ -198,34 +198,34 @@ Vector *Vector_Lerp(Vector *result, Vector *vec, Vector *target, float strength)
 }
 
 float Vector_ProjectionV(Vector *vec, Vector *line) {
-  return (vec->x*line->x+vec->y*line->y) / hypot(line->x, line->y);
+  return (vec->x*line->x+vec->y*line->y) / (float) hypot(line->x, line->y);
 }
 
 float Vector_ProjectionA(Vector *vec, float angle) {
-  return hypot(vec->x, vec->y) * cos(angle);
+  return (float) hypot(vec->x, vec->y) * (float) cos(angle);
 }
 
 float Vector_PerpProjection(Vector *vec, Vector *line) {
-  return fabs(vec->x * line->y - vec->y * line->x) / hypot(line->x, line->y);
+  return (float) fabs(vec->x * line->y - vec->y * line->x) / (float) hypot(line->x, line->y);
 }
 
 Vector *Vector_ComponentV(Vector *result, Vector *vec, Vector *line) {
-  float mag = (vec->x*line->x+vec->y*line->y) / hypot(line->x, line->y);
+  float mag = (vec->x*line->x+vec->y*line->y) / (float) hypot(line->x, line->y);
   result->x = mag * line->x;
   result->y = mag * line->y;
   return result;
 }
 
 Vector *Vector_ComponentA(Vector *result, Vector *vec, float angle) {
-  float r = hypot(vec->x, vec->y) * cos(angle);
-  float theta = atan2(vec->y, vec->x) + angle;
-  result->x = r * cos(theta);
-  result->y = r * sin(theta);
+  float r = (float) hypot(vec->x, vec->y) * (float) cos(angle);
+  float theta = (float) atan2(vec->y, vec->x) + angle;
+  result->x = r * (float) cos(theta);
+  result->y = r * (float) sin(theta);
   return result;
-} 
+}
 
 Vector *Vector_PerpComponent(Vector *result, Vector *vec, Vector *line) {
-  float mag = (vec->x*line->x+vec->y*line->y) / hypot(line->x, line->y);
+  float mag = (vec->x*line->x+vec->y*line->y) / (float) hypot(line->x, line->y);
   result->x = vec->x - mag * line->x;
   result->y = vec->y - mag * line->y;
   return result;
@@ -236,7 +236,7 @@ int Vector_Equal(Vector *a, Vector *b) {
 }
 
 float Vector_Compare(Vector *a, Vector *b) {
-  return hypot(a->x, a->y) - hypot(b->x, b->y);
+  return (float) hypot(a->x, a->y) - (float) hypot(b->x, b->y);
 }
 
 float Vector_SqCompare(Vector *a, Vector *b) {
