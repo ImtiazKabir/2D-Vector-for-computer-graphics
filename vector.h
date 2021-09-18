@@ -1,62 +1,63 @@
 #ifndef COMP_VECTOR_2_F
 #define COMP_VECTOR_2_F
 
+#include <stdbool.h>
+
 typedef struct {
-  float x;
-  float y;
+  double x;
+  double y;
 } Vector;
 
-Vector *Vector_Create();
-Vector *Vector_CreateXY(float x, float y);
-Vector *Vector_CreateRT(float r, float theta);
-Vector *Vector_ZERO();
-Vector *Vector_UNIT();
+Vector *Vector_Create(void);
+Vector *Vector_CreateXY(double x, double y);
+Vector *Vector_CreateRT(double r, double theta);
+Vector *Vector_ZERO(void);
+Vector *Vector_UNIT(void);
 
 void Vector_Destroy(Vector *vec);
 
-Vector *Vector_Add(Vector *result, Vector *a, Vector *b);
-Vector *Vector_AddF(Vector *result, float ax, float ay, float bx, float by);
-Vector *Vector_Sub(Vector *result, Vector *a, Vector *b);
-Vector *Vector_SubF(Vector *result, float ax, float ay, float bx, float by);
-Vector *Vector_Mult(Vector *result, Vector *a, float factor);
-Vector *Vector_Div(Vector *result, Vector *vec, float factor);
-Vector *Vector_Negate(Vector *result, Vector *vec);
+void Vector_Add(Vector *result, Vector *a, Vector *b);
+void Vector_AddD(Vector *result, double ax, double ay, double bx, double by);
+void Vector_Sub(Vector *result, Vector *a, Vector *b);
+void Vector_SubD(Vector *result, double ax, double ay, double bx, double by);
+void Vector_Mult(Vector *result, Vector *a, double factor);
+void Vector_Div(Vector *result, Vector *vec, double factor);
+void Vector_Negate(Vector *result, Vector *vec);
 
-float Vector_Mag(Vector *vec);
-float Vector_SqMag(Vector *vec);
-Vector *Vector_Normal(Vector *result, Vector *vec);
-Vector *Vector_SetMag(Vector *result, Vector *vec, float mag);
-float Vector_Dir(Vector *vec);
+double Vector_Mag(Vector *vec);
+double Vector_SqMag(Vector *vec);
+void Vector_Normal(Vector *result, Vector *vec);
+void Vector_SetMag(Vector *result, Vector *vec, double mag);
+double Vector_Dir(Vector *vec);
 
-float Vector_Dot(Vector *a, Vector *b);
-float Vector_Cross(Vector *a, Vector *b);
+double Vector_Dot(Vector *a, Vector *b);
+double Vector_Cross(Vector *a, Vector *b);
 
-float Vector_Dist(Vector *a, Vector *b);
-float Vector_SqDist(Vector *a, Vector *b);
-float Vector_AngleTo(Vector *from, Vector *to);
-float Vector_AngleToF(float fromX, float fromY, float toX, float toY);
+double Vector_Dist(Vector *a, Vector *b);
+double Vector_SqDist(Vector *a, Vector *b);
+double Vector_AngleTo(Vector *from, Vector *to);
+double Vector_AngleToD(double fromX, double fromY, double toX, double toY);
 
-Vector *Vector_Copy(Vector *result, Vector *vec);
-Vector *Vector_Ortho(Vector *result, Vector *vec);
+void Vector_Copy(Vector *result, Vector *vec);
+void Vector_Ortho(Vector *result, Vector *vec);
 
-Vector *Vector_Truncate(Vector *result, Vector *vec, float limit);
-Vector *Vector_Rotate(Vector *result, Vector *vec, float angle);
-Vector *Vector_Lerp(Vector *result, Vector *vec, Vector *target, float strength);
+void Vector_Truncate(Vector *result, Vector *vec, double limit);
+void Vector_Rotate(Vector *result, Vector *vec, double angle);
+void Vector_Lerp(Vector *result, Vector *vec, Vector *target, double strength);
 
-float Vector_ProjectionV(Vector *vec, Vector *line);
-float Vector_ProjectionA(Vector *vec, float angle);
-float Vector_PerpProjection(Vector *vec, Vector *line);
+double Vector_ProjectionV(Vector *vec, Vector *line);
+double Vector_ProjectionA(Vector *vec, double angle);
+double Vector_PerpProjection(Vector *vec, Vector *line);
 
-Vector *Vector_ComponentV(Vector *result, Vector *vec, Vector *line);
-Vector *Vector_ComponentA(Vector *result, Vector *vec, float angle);
-Vector *Vector_PerpComponent(Vector *result, Vector *vec, Vector *line);
+void Vector_ComponentV(Vector *result, Vector *vec, Vector *line);
+void Vector_ComponentA(Vector *result, Vector *vec, double angle);
+void Vector_PerpComponent(Vector *result, Vector *vec, Vector *line);
 
-int Vector_Equal(Vector *a, Vector *b);
-float Vector_Compare(Vector *a, Vector *b);
-float Vector_SqCompare(Vector *a, Vector *b);
+bool Vector_Equal(Vector *a, Vector *b);
+double Vector_Compare(Vector *a, Vector *b);
+double Vector_SqCompare(Vector *a, Vector *b);
 
-Vector *Vector_Bound(Vector *result, Vector *vec, Vector *bound);
-Vector *Vector_BoundF(Vector *result, Vector *vec, float boundX, float boundY);
+void Vector_Bound(Vector *result, Vector *vec, Vector *bound);
+void Vector_BoundD(Vector *result,Vector *vec, double boundX, double boundY);
 
-#endif
-
+#endif /* COMP_VECTOR_2_F */
